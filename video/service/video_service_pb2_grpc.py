@@ -17,17 +17,17 @@ class VideoServiceStub(object):
         self.GetVideo = channel.unary_unary(
                 '/VideoService/GetVideo',
                 request_serializer=video__service__pb2.VideoRequest.SerializeToString,
-                response_deserializer=video__service__pb2.VideoReply.FromString,
+                response_deserializer=video__service__pb2.VideoResponse.FromString,
                 )
         self.PostVideo = channel.unary_unary(
                 '/VideoService/PostVideo',
                 request_serializer=video__service__pb2.VideoRequest.SerializeToString,
-                response_deserializer=video__service__pb2.VideoReply.FromString,
+                response_deserializer=video__service__pb2.VideoResponse.FromString,
                 )
         self.DeleteVideo = channel.unary_unary(
                 '/VideoService/DeleteVideo',
                 request_serializer=video__service__pb2.VideoRequest.SerializeToString,
-                response_deserializer=video__service__pb2.VideoReply.FromString,
+                response_deserializer=video__service__pb2.VideoResponse.FromString,
                 )
 
 
@@ -58,17 +58,17 @@ def add_VideoServiceServicer_to_server(servicer, server):
             'GetVideo': grpc.unary_unary_rpc_method_handler(
                     servicer.GetVideo,
                     request_deserializer=video__service__pb2.VideoRequest.FromString,
-                    response_serializer=video__service__pb2.VideoReply.SerializeToString,
+                    response_serializer=video__service__pb2.VideoResponse.SerializeToString,
             ),
             'PostVideo': grpc.unary_unary_rpc_method_handler(
                     servicer.PostVideo,
                     request_deserializer=video__service__pb2.VideoRequest.FromString,
-                    response_serializer=video__service__pb2.VideoReply.SerializeToString,
+                    response_serializer=video__service__pb2.VideoResponse.SerializeToString,
             ),
             'DeleteVideo': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteVideo,
                     request_deserializer=video__service__pb2.VideoRequest.FromString,
-                    response_serializer=video__service__pb2.VideoReply.SerializeToString,
+                    response_serializer=video__service__pb2.VideoResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -93,7 +93,7 @@ class VideoService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/VideoService/GetVideo',
             video__service__pb2.VideoRequest.SerializeToString,
-            video__service__pb2.VideoReply.FromString,
+            video__service__pb2.VideoResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -110,7 +110,7 @@ class VideoService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/VideoService/PostVideo',
             video__service__pb2.VideoRequest.SerializeToString,
-            video__service__pb2.VideoReply.FromString,
+            video__service__pb2.VideoResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -127,6 +127,6 @@ class VideoService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/VideoService/DeleteVideo',
             video__service__pb2.VideoRequest.SerializeToString,
-            video__service__pb2.VideoReply.FromString,
+            video__service__pb2.VideoResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

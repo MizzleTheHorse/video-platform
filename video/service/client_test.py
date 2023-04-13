@@ -13,45 +13,26 @@ def run():
             print(' ')
             stub = video_service_pb2_grpc.VideoServiceStub(channel)
 
-            print("Calling function -> GetUser")
-            response = stub.GetVideo(video_service_pb2.VideoRequest())
-            if response.response_code == 200:
-                print('User not found')
-            else:
-                print("Fetched user. ID: " + str(response.user_id))
+            print("Get Video")
+
+            video1 = video_service_pb2.Video()
+
+            video1.user_id = 1
+            video1.title = 'oskar sutter neger nosser'
+            video1.resume = 'ja det kan du tro han gør'
+            video1.category = 'faggotroni'
+
+            response = stub.GetVideo(video_service_pb2.VideoRequest(user_id = 1, Video=video1))
+            print(response)
 
             time.sleep(2)
-            print(' ')
-            print('Calling function -> PostUser')
-            response = stub.PostUser(user_service_pb2.UserRequest(name='test', email='test1', hashed_password='sha256$eGVkT8qf4rSuXFCt$7769b1d9349a2a25001b25baca787ef00be96377ebf446a97127435fcebb1b9a'))
-            if not response.response_code == 200:
-                print('user already exists')
-            else:
-                print("Inserted user. ID: " + str(response.user_id))
+
+            print('Get Latest')
+
+            response = stub.GetVideo(video_service_pb2.VideoRequest(latest=True))
+            print(response)
 
             time.sleep(2)
-            print(' ')
-
-
-            response = stub.GetUser(user_service_pb2.UserRequest(name='test', email='test1'))
-            if not response.response_code == 200:
-                print('user not found')
-                
-            else:
-                print("Fetched user. ID: " + str(response.user_id))
-
-            time.sleep(2)
-            print(' ')
-
-            response = stub.DeleteUser(user_service_pb2.UserRequest(name='test', email='test_mail11', hashed_password='&%¤#"!'))
-            if not response.response_code == 200:
-                print('user not found')
-            else:
-                print("Deleted user. " + str(response.user_id))
-                return
-        
-            time.sleep(1)
-            print(' ')
 
        
 if __name__ == '__main__':

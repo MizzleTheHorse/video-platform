@@ -2,7 +2,6 @@ from db_connection import Session
 from models import Video, Category
 from sqlite3 import OperationalError, IntegrityError
 from sqlalchemy.exc import IntegrityError
-
 class DatabaseInterface:
     def __init__(self):
         pass
@@ -24,24 +23,24 @@ class DatabaseInterface:
                         return video
                     else: 
                         return 'not found'
-            except OperationalError as e:
-                print('an error occured' + str(e))
-            
+            except Exception as e: 
+                return str(e)
+            finally:
+                session.close()
 
-    def post_video(self, user_id, title, resume, category):
+    def post_video(self, user_id, title, resume=None, category=None):
         with Session() as session:
             try: 
                 video = Video(user_id=user_id, title=title, resume=resume, category=category)
                 session.add(video)
                 session.commit()
-                session.expunge_all()
-                #todo fix?
+                video = self.get_video(id=video.video_id)
                 return video
-            except IntegrityError as e: 
-                
+            except Exception as e: 
+                session.expunge_all()
                 return str(e)
-            except OperationalError as e:
-                print('an error occured' + str(e))
+            finally:
+                session.close()
             
     
     def delete_video(self, id):
@@ -55,7 +54,10 @@ class DatabaseInterface:
                 else: 
                     return 'not found'
             except Exception as e: 
-                print('an error occured' + str(e))
+                return str(e)
+            finally:
+                session.close()
+            
 
 
     #Returns last 5 videos

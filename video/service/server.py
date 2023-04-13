@@ -17,9 +17,14 @@ class VideoService():
             if request.category:
                 #return latest videos in a certain category
                 video_list = self.db.get_latest_videos(category=request.category)
+                for x in video_list:
+                    video = video_service_pb2.Video()
+                    video.user_id = x.user_id
+                    print(video.user_id)
                 return video_service_pb2.VideoResponse(videos = video_list, response_code = 'ok')
             #return latest videos
             video_list = self.db.get_latest_videos()
+
             return video_service_pb2.VideoResponse(videos = video_list, response_code = 'ok')
         
         if request.video_id and request.user_id:
@@ -55,7 +60,7 @@ def serve_consumer():
 def serve_gRPC():
     port = '50051'
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    video_service_pb2_grpc.add_UserServiceServicer_to_server(VideoService(), server)
+    video_service_pb2_grpc.add_VideoServiceServicer_to_server(VideoService(), server)
     server.add_insecure_port('[::]:' + port)
     server.start()
     print("Server started, listening on " + port)

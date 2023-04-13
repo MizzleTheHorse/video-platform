@@ -20,10 +20,10 @@ class Video(Base):
     category: Mapped[str] = mapped_column(ForeignKey("category.category"))
     #category_id: Mapped[int] = mapped_column(ForeignKey("category.category_id"))
 
-
+    
     def __repr__(self) -> str:
-        return f"Video (id={self.video_id!r}, user_id={self.user_id!r}, title={self.title!r},  category={self.category!r})"
-
+       return f"Video (id={self.video_id!r}, user_id={self.user_id!r}, title={self.title!r},  category={self.category!r})"
+    
 
 class Category(Base):
     __tablename__ = "category"
