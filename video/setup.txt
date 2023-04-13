@@ -1,0 +1,9 @@
+How to deploy video_service 
+
+
+- open terminal 
+
+> docker build . -t video_service 
+
+> docker run -it -p 127.0.0.1:50051:50051/tcp video_service
+

@@ -1,0 +1,67 @@
+<!-- templates/video_upload.html -->
+{% extends "base.html" %}
+
+{% block content %}
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-info">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+<h1 class="title">
+Upload new video
+</h1>
+
+<form action="{{ url_for('content.video') }}" method="post"> 
+    <div class="field">
+        <label class="label has-text-white">Title</label>
+        <div class="control">
+        <input class="input" type="text" name="title" placeholder="Enter title...">
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label has-text-white">Category</label>
+        <div class="control">
+        <div class="select">
+            <select name="category">
+            <option>Select category</option>
+            <option>Funny</option>
+            <option>Animals</option>
+            <option>Fashion</option>
+            <option>Sports</option>
+            <option>Outdoor</option>
+            <option>Science</option>
+            <option>Education</option>
+            <option>Animals</option>
+            </select>
+        </div>
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label has-text-white">Summary of Video</label>
+        <div class="control">
+        <textarea class="textarea" name="resume" placeholder="Write a short resume here..."></textarea>
+        </div>
+    </div>
+    
+    <div class="file has-name">
+        <label class="file-label">
+        <input type="file" id="myFile" name="file">
+    </div>
+
+    <br>
+    
+    <div class="field is-grouped">
+        <div class="control">
+        <button class="button is-link">Submit</button>
+        </div>
+        
+    </div>
+<form> 
+
+{% endblock %}

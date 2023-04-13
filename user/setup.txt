@@ -1,0 +1,16 @@
+How to deploy user_service 
+
+
+- open terminal 
+
+> docker build . -t user_service 
+
+> docker run -it -p 127.0.0.1:50051:50051/tcp user_service
+
+
+Testing
+- open second terminal
+
+> cd service/
+
+> python3 client_test.py

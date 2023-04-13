@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+
+service UserService {
+  rpc GetUser (UserRequest) returns (UserReply) {}
+  rpc PostUser (UserRequest) returns (UserReply) {}
+  rpc DeleteUser (UserRequest) returns (UserReply) {}
+}
+
+
+message UserRequest {
+  int32 user_id = 1;
+  string name = 2;
+  string email = 3;
+  string hashed_password = 4;  
+}
+
+
+message UserReply {
+  int32 user_id = 1;
+  string name = 2;
+  string email = 3;
+  string hashed_password = 4;
+  int32 response_code = 5;
+}

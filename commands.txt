@@ -1,0 +1,4 @@
+Remove all containers 
+docker rm -f $(docker ps -a -q)
+
+build and tag containers before using compose up 

@@ -1,0 +1,18 @@
+
+<p>
+    Videos goes here
+</p>
+
+{% for user_id, title, category, resume in data: %}
+
+<ul> 
+    { title }
+    <li>
+        { category }
+    </li>
+    <li>
+        { resume }
+    </li>
+</ul>
+
+{% endfor %}
