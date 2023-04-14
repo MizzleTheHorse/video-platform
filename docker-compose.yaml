@@ -12,15 +12,32 @@ services:
             shared_network:
         ports:
             - 5000:5000
+            
     user_service:
         build:
             context: .
             dockerfile: user/Dockerfile
-        image: user_service
+        image: user_service  
         volumes:
                  - user_service_db:/system/service/instance/
         networks:
             shared_network:
+
+
+    db_video:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password        
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: video_host
+            MYSQL_PASSWORD: secret
+            MYSQL_DATABASE: video_database
+        restart: always
+        ports:
+            - "3306:3306"
+        volumes:
+            - "./video/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql"
+            - video_service_db:/var/lib/mysql
 
     kafka1:
         image: confluentinc/cp-kafka:7.2.1
@@ -94,6 +111,8 @@ services:
 
 volumes:
   user_service_db:
+  video_service_db:
+
 
 networks:
   shared_network:

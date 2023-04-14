@@ -1,4 +1,26 @@
 Remove all containers 
-docker rm -f $(docker ps -a -q)
+> docker rm -f $(docker ps -a -q)
 
-build and tag containers before using compose up 
+remove mysql container 
+
+> sudo netstat -tulpn | grep 3306
+
+> kill <pid> 
+
+
+
+  db_user:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password        
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user_host
+            MYSQL_PASSWORD: secret
+            MYSQL_DATABASE: user_database
+        restart: always
+        ports:
+            - "3306:3306"
+        volumes:
+            - "./user/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql"
+            - user_service_db:/var/lib/mysql
+

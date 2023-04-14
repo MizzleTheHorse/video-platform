@@ -9,7 +9,6 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
-
 class Video(Base):
     __tablename__ = "video"
 

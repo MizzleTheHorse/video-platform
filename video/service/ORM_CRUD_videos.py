@@ -2,6 +2,7 @@ from db_connection import Session
 from models import Video, Category
 from sqlite3 import OperationalError, IntegrityError
 from sqlalchemy.exc import IntegrityError
+
 class DatabaseInterface:
     def __init__(self):
         pass
