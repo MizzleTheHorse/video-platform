@@ -12,7 +12,6 @@ class VideoService():
         self.db = DatabaseInterface()
 
 
-
     def GetVideo(self, request, context):
         try:
             print('request: ' + str(request))
