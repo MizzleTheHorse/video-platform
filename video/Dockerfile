@@ -16,7 +16,7 @@ RUN python -m pip install -r requirements.txt
 
 RUN python -m grpc_tools.protoc -I protobufs --python_out=/system/service/ \
 
-           --grpc_python_out=/system/service/ protobufs/user_service.proto
+           --grpc_python_out=/system/service/ protobufs/video_service.proto
 
 
 #python3 -m grpc_tools.protoc -I protobufs --python_out=service          --grpc_python_out=service protobufs/video_service.proto

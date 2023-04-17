@@ -7,14 +7,16 @@ db_url_docker = "sqlite:///service/instance/video_database.sqlite"
 
 db_url_local = "sqlite:////home/emil/Desktop/Bachelor/system/video-platform/video/service/instance/video_database.sqlite"
 
-db_url_mysql  = 'mysql://video_host:secret@127.0.0.1/video_database'
+url = 'mysql+mysqldb://video_host:secret@172.21.0.2:3307/video_database'
 
-if not database_exists(db_url_mysql):
+
+
+if not database_exists(url):
     print('no db found')
-    create_database(db_url_mysql)
+    create_database(url)
     print('New database created')
 
-engine = create_engine(db_url_mysql, pool_size=5, pool_recycle=3600)
+engine = create_engine(url, pool_size=5, pool_recycle=3600)
 
 metadata.create_all(bind=engine)
 

@@ -3,7 +3,6 @@ from datetime import datetime
 import user_service_pb2
 import user_service_pb2_grpc
 from ORM_CRUD_users import DatabaseInterface
-from kafka import KafkaConsumer, KafkaProducer
 
 
 from concurrent import futures

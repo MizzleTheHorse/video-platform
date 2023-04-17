@@ -14,21 +14,21 @@ class Video(Base):
 
     video_id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int]
-    title: Mapped[str]
-    resume: Mapped[Optional[str]]
-    category: Mapped[str] = mapped_column(ForeignKey("category.category"))
-    #category_id: Mapped[int] = mapped_column(ForeignKey("category.category_id"))
+    title: Mapped[str] = mapped_column(String(50))
+    resume: Mapped[Optional[str]] = mapped_column(String(255))
+    #category: Mapped[str] = mapped_column(String(255), ForeignKey("category.category")) 
+    category_id: Mapped[int] = mapped_column(ForeignKey("category.category_id"))
 
     
     def __repr__(self) -> str:
-       return f"Video (id={self.video_id!r}, user_id={self.user_id!r}, title={self.title!r},  category={self.category!r})"
+       return f"Video (id={self.video_id!r}, user_id={self.user_id!r}, title={self.title!r},  category={self.category_id!r})"
     
 
 class Category(Base):
     __tablename__ = "category"
 
     category_id: Mapped[int] = mapped_column(primary_key=True)
-    category: Mapped[str]
+    category: Mapped[str] = mapped_column(String(255))
 
     def __repr__(self) -> str:
         return f"Category (id={self.category_id!r}, category={self.category!r})"

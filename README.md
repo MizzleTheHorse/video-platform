@@ -2,13 +2,30 @@
 
 how to run whole system: 
 
-cd frontend/
+build all images first: 
 
-docker build . -t frontend 
+> cd frontend
 
-cd .. 
+> docker build . -t frontend 
 
-docker-compose up 
+> cd ..
+
+> cd user 
+
+> docker build . -t user_service 
+
+> cd ..
+
+> cd video 
+
+> docker build . -t video_service 
+
+> cd ..
+
+run docker compose file 
+
+> docker-compose up 
+
 
 
 localhost:5000
