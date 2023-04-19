@@ -18,7 +18,9 @@ services:
         build:
             context: .
             dockerfile: user/Dockerfile
-        image: user_service  
+        image: user_service 
+        environment:
+            MYSQL_IP: db_user
         restart: always
         depends_on:
             - db_user
@@ -55,6 +57,8 @@ services:
             dockerfile: video/Dockerfile
         image: video_service  
         restart: always
+        environment:
+            MYSQL_IP: db_video
         depends_on:
             - db_video
         links:
