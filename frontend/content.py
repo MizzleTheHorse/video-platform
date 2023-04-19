@@ -4,12 +4,14 @@ from flask_login import current_user
 from .models import Video
 from kafka import KafkaConsumer, KafkaProducer
 import json
+from .video_client import VideoClient
+
 
 content = Blueprint('content', __name__)
+client = VideoClient()
 
 TOPIC_POST_VIDEO = "video-post-event"
 TOPIC_POST_WATCHED = "video-post-watch-event"
-
 
 category_list = ['Sports' , 'Outdoor', 'Music', 'Gaming', 'DIY', 'Food', 'Programming', 'Animals', 'Education']
 
@@ -39,6 +41,9 @@ def stream_template(template_name, **context):
 
 @content.route('/latest')
 def latest():
+    content = client.get_latest_videos()
+    print(type(content))
+    print(content)
     return render_template('latest.html', content=video_dic)
 
 
@@ -74,6 +79,9 @@ def video():
     else:
         return render_template('upload.html')
 
+@content.route('/video/<int:video_id>', methods=['GET'])
+def test():
+    pass
 
 
 @content.route('/view')

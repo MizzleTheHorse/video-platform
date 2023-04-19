@@ -19,9 +19,8 @@ RUN python -m grpc_tools.protoc -I protobufs --python_out=/system/service/ \
            --grpc_python_out=/system/service/ protobufs/video_service.proto
 
 
-#python3 -m grpc_tools.protoc -I protobufs --python_out=service          --grpc_python_out=service protobufs/video_service.proto
-
-
 EXPOSE 50051
+
+RUN export DOCKER_HOST_IP=$(route -n | awk '/UG[ \t]/{print $2}')
 
 ENTRYPOINT ["python", "service/server.py"]

@@ -19,6 +19,8 @@ services:
             context: .
             dockerfile: user/Dockerfile
         image: user_service  
+        environment:
+            DOCKER_HOST_IP: 
         restart: always
         depends_on:
             - db_user
@@ -29,7 +31,6 @@ services:
             - /tmp/user_service/mysqld:/var/run/mysqld.sock
         networks:
             shared_network:
-
 
     db_user:
         image: mysql
@@ -56,8 +57,6 @@ services:
         image: video_service  
         restart: always
         depends_on:
-            - db_video
-        links:
             - db_video
         volumes:
             - video_service:/system/service/instance/

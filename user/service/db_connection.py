@@ -2,13 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy_utils import create_database, database_exists
 from models import metadata
-import pymysql
-
 db_url_test = "sqlite:///service/instance/user_database.sqlite"
 
 db_url  = 'mysql+mysqldb://root:root@127.0.0.1/user_database'
 
-url = 'mysql+mysqldb://user_host:secret@192.168.87.175/user_database'
+url = 'mysql+mysqldb://user_host:secret@172.23.0.4/user_database'
 
 
 #

@@ -16,7 +16,7 @@ class VideoClient():
     def __init__(self) -> None:
         pass
     
-    
+
     def get_latest_videos():
         request = VideoRequest(latest=True)
         response = video_client.GetUser(request)

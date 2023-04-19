@@ -7,7 +7,9 @@ db_url_docker = "sqlite:///service/instance/video_database.sqlite"
 
 db_url_local = "sqlite:////home/emil/Desktop/Bachelor/system/video-platform/video/service/instance/video_database.sqlite"
 
-url = 'mysql+mysqldb://video_host:secret@172.21.0.2:3307/video_database'
+
+#todo fix env variables
+url = 'mysql+mysqldb://video_host:secret@127.0.0.1:3307/video_database'
 
 
 
