@@ -22,6 +22,11 @@ RUN python -m pip install markupsafe==2.0.1
 RUN python3 -m grpc_tools.protoc -I protobufs --python_out=. \
            --grpc_python_out=. protobufs/user_service.proto
 
+
+RUN python3 -m grpc_tools.protoc -I protobufs --python_out=. \
+           --grpc_python_out=. protobufs/video_service.proto
+
+
 EXPOSE 5000
 
 ENV FLASK_APP=__init__.py

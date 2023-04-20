@@ -14,7 +14,6 @@ class VideoService():
 
     def GetVideo(self, request, context):
         try:
-            print('request: ' + str(request))
             #return latest videos
             if request.latest == True:  
                 if request.category_id:                    
@@ -64,7 +63,6 @@ class VideoService():
     ##These methods are reserved for Apache kafka cluster
     def PostVideo(self, request, context):
         video = request.video
-        print(type(video))
         video = self.db.post_video(user_id=request.user_id, title=request.title, resume=request.resume, category=request.category)
         if video:
             return video_service_pb2.VideoResponse(response_code = 'ok')
@@ -84,7 +82,7 @@ def serve_gRPC():
     video_service_pb2_grpc.add_VideoServiceServicer_to_server(VideoService(), server)
     server.add_insecure_port('[::]:' + port)
     server.start()
-    print("Content Management Service Started: " + port)
+    print("Content Management Service Started on: " + port)
     server.wait_for_termination()
 
 

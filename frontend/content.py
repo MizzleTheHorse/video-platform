@@ -1,17 +1,19 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, Flask, request, render_template, Response, stream_with_context
 from flask import current_app as app
 from flask_login import current_user
-from .models import Video
+#from .models import Video
 from kafka import KafkaConsumer, KafkaProducer
 import json
 from .video_client import VideoClient
+from .video_service_pb2 import Video
 
 
 content = Blueprint('content', __name__)
 client = VideoClient()
 
 TOPIC_POST_VIDEO = "video-post-event"
-TOPIC_POST_WATCHED = "video-post-watch-event"
+TOPIC_WATCHED_VIDEO = "video-watch-event"
+TOPIC_RATE_VIDEO = "video-rate-event"
 
 category_list = ['Sports' , 'Outdoor', 'Music', 'Gaming', 'DIY', 'Food', 'Programming', 'Animals', 'Education']
 
@@ -41,10 +43,8 @@ def stream_template(template_name, **context):
 
 @content.route('/latest')
 def latest():
-    content = client.get_latest_videos()
-    print(type(content))
-    print(content)
-    return render_template('latest.html', content=video_dic)
+    video = client.get_latest_videos()
+    return render_template('latest.html', content=video.videos)
 
 
 @content.route('/category')
@@ -79,9 +79,11 @@ def video():
     else:
         return render_template('upload.html')
 
+
 @content.route('/video/<int:video_id>', methods=['GET'])
-def test():
-    pass
+def get_video(video_id):
+    video = client.get_video(video_id=video_id)
+    return render_template('video.html', video=video.videos)
 
 
 @content.route('/view')
@@ -117,20 +119,39 @@ def view():
 
 @content.route('/watch-video/<int:id>', methods=['POST'])
 def video_watched_event(id):
-    producer = KafkaProducer(
-    bootstrap_servers='kafka1:9092', 
-    value_serializer=lambda v: json.dumps(v).encode('ascii'),
-    key_serializer=lambda v: json.dumps(v).encode('ascii'))
-    producer.send(
-    TOPIC_POST_VIDEO,
-    key={"video_id": 'test123'},
-    value={
-        "user_id": 1,
-        "title": request.form.get("title"),
-        "resume": request.form.get("resume"),
-        "category": request.form.get("category")
-    })
-    producer.flush()
-    return 'Video successfully watched'
-
+    try:
+        producer = KafkaProducer(
+        bootstrap_servers='kafka1:9092', 
+        value_serializer=lambda v: json.dumps(v).encode('ascii'),
+        key_serializer=lambda v: json.dumps(v).encode('ascii'))
+        producer.send(
+        TOPIC_POST_VIDEO,
+        key={"video_id": id},
+        value={
+            "user_id": current_user
+        })
+        producer.flush()
+        return 'Video successfully watched'
+    except Exception as e:
+        return 'Video event failed'
+    
+#
+@content.route('/rate-video/<int:rating>', methods=['POST'])
+def video_rated_event(id):
+    try:
+        producer = KafkaProducer(
+        bootstrap_servers='kafka1:9092', 
+        value_serializer=lambda v: json.dumps(v).encode('ascii'),
+        key_serializer=lambda v: json.dumps(v).encode('ascii'))
+        producer.send(
+        TOPIC_RATE_VIDEO,
+        key={"video_id": id},
+        value={
+            "user_id": current_user
+            "rating" : 
+        })
+        producer.flush()
+        return 'Video successfully watched'
+    except Exception as e:
+        return 'Video event failed'
   

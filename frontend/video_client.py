@@ -16,32 +16,31 @@ class VideoClient():
     def __init__(self) -> None:
         pass
     
-
-    def get_latest_videos():
+    def get_latest_videos(self):
         request = VideoRequest(latest=True)
-        response = video_client.GetUser(request)
+        response = video_client.GetVideo(request)
         if not response.response_code =='ok':
             return None
         return response
     
-    def get_latest_videos_category(category_id):
+    def get_latest_videos_category(self, category_id):
         request = VideoRequest(latest=True, category_id=category_id)
-        response = video_client.GetUser(request)
+        response = video_client.GetVideo(request)
         if not response.response_code =='ok':
             return None
         return response
     
-    def get_video(video_id):
+    def get_video(self, video_id):
         request = VideoRequest(video_id=video_id)
-        response = video_client.GetUser(request)
+        response = video_client.GetVideo(request)
         if not response.response_code =='ok':
             return None
         return response
     
     
-    def get_latest_videos_user(user_id):
+    def get_latest_videos_user(self, user_id):
         request = VideoRequest(user_id=user_id)
-        response = video_client.GetUser(request)
+        response = video_client.GetVideo(request)
         if not response.response_code =='ok':
             return None
         return response

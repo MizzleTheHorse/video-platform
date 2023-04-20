@@ -21,6 +21,5 @@ RUN python -m grpc_tools.protoc -I protobufs --python_out=/system/service/ \
 
 EXPOSE 50051
 
-RUN export DOCKER_HOST_IP=$(route -n | awk '/UG[ \t]/{print $2}')
 
 ENTRYPOINT ["python", "service/server.py"]

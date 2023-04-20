@@ -8,7 +8,7 @@ import os, time
 
 MYSQL_IP = os.getenv("MYSQL_IP")
 
-url = f'mysql+mysqldb://user_host:secret@{MYSQL_IP}/user_database'
+url = f'mysql+mysqldb://recommedation_host:secret@{MYSQL_IP}/recommendation_database'
 
 
 #

@@ -4,7 +4,7 @@
 {% block content %}
 
 <h1 class="title">
-    View Latest videos
+    Viewing single video
   </h1>
   
 
@@ -16,8 +16,7 @@
   {% endif %}
   {% endwith %}
 
-
-  {% for user_id, title, category, resume in data: %}
+{% for x in video %}
     <div class="box">
       <article class="media">
         <div class="media-left">
@@ -28,9 +27,9 @@
         <div class="media-content">
           <div class="content">
             <p>
-              <strong>{{ title }}</strong>
+              <strong>{{ x.title }}</strong>
               <br>
-              {{ resume }}
+              {{ x.resume }}
             </p>
           </div>
           <nav class="level is-mobile">
@@ -55,6 +54,7 @@
         </div>
       </article>
     </div>
-  {% endfor %}
   
+  {% endfor %}
+
   {% endblock %}

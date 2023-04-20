@@ -8,6 +8,8 @@ services:
         environment:
             USER_SERVICE_HOST: user_service
             VIDEO_SERVICE_HOST: video_service
+        restart: always
+
         image: frontend
         networks:
             shared_network:
@@ -18,15 +20,9 @@ services:
         build:
             context: .
             dockerfile: user/Dockerfile
-<<<<<<< HEAD
-        image: user_service  
-        environment:
-            DOCKER_HOST_IP: 
-=======
         image: user_service 
         environment:
             MYSQL_IP: db_user
->>>>>>> 5bc28d2deef7b0857474ebb83f89da1d8038c1b4
         restart: always
         depends_on:
             - db_user
@@ -66,6 +62,7 @@ services:
             MYSQL_IP: db_video
         depends_on:
             - db_video
+        
         volumes:
             - video_service:/system/service/instance/
             - /tmp/video_service/mysqld:/var/run/mysqld.sock

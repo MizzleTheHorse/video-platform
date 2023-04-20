@@ -8,7 +8,7 @@
   View Latest videos
 </h1>
 
-{% for key, value in content.items() %}
+{% for x in content %}
   <div class="box">
     <article class="media">
       <div class="media-left">
@@ -19,15 +19,19 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <strong>{{ key }}</strong>
+            <a href="{{ url_for('content.get_video' , video_id = x.video_id ) }}" ><strong>{{ x.title }}</strong> </a>
             <br>
-            {{ value }}
+            {{ x.resume }}
           </p>
         </div>
         <button class="btn btn-primary" 
-                        hx-post="/watch-video/{{key}}">
+                        hx-post="/watch-video/{{x.video_id}}">
                         Watch me! 
                     </button>
+            <button class="btn btn-primary" 
+                  hx-post="/rate-video/{{x}}">
+                  Watch me! 
+            </button>
         <!--
         <nav class="level is-mobile">
           <div class="level-left">

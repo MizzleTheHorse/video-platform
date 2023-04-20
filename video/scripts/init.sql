@@ -59,19 +59,19 @@ INSERT INTO category (category_id, category)
 VALUES (8, 'Education');
 
 INSERT INTO video (title, user_id, resume, category_id)
-VALUES ('Food video', '10', 'amagermanden er på fri fod', 7);
+VALUES ('Food video', '10', 'Video omkring mad', 7);
 
 INSERT INTO video (title, user_id, resume, category_id)
-VALUES ('animal video', '10', 'amagermanden er på fri hoved', 7);
+VALUES ('animal video', '10', 'amagermanden er sluppet fri', 7);
 
 INSERT INTO video (title, user_id, resume, category_id)
-VALUES ('random video', '10', 'amagermanden er på fri arm', 6);
+VALUES ('random video', '10', 'amagermanden er stadig sluppet fri', 6);
 
 INSERT INTO video (title, user_id, resume, category_id)
-VALUES ('test video', '11', 'amagermanden er på fri ben', 6);
+VALUES ('test video', '11', 'amagermanden er fanget igen', 6);
 
 INSERT INTO video (title, user_id, resume, category_id)
-VALUES ('lol video', '11', 'amagermanden er på fri hånd', 6);
+VALUES ('lol video', '11', 'amagermanden er ked af det', 6);
 
 INSERT INTO video (title, user_id, resume, category_id)
-VALUES ('programming video', '11', 'amagermanden er på fri mave', 7);
+VALUES ('programming video', '11', 'JEG kan godt lide python', 7);
