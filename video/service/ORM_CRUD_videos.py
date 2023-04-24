@@ -61,7 +61,7 @@ class DatabaseInterface:
             
 
 
-    #Returns last 5 videos
+    #Returns last 10 videos
     def get_latest_videos(self):
         with Session() as session:
             try: 
@@ -80,7 +80,7 @@ class DatabaseInterface:
                 print('an error occured' + str(e))
 
     
-    #Returns last 5 videos of a particular catoergy 
+    #Returns last 10 videos of a particular catoergy 
     def get_latest_videos_category(self, category_id):
         with Session() as session:
             try: 
@@ -96,6 +96,8 @@ class DatabaseInterface:
                 return result
             except OperationalError as e:
                 print('an error occured' + str(e))
+
+    
     
     
 

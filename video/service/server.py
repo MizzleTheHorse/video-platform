@@ -1,7 +1,7 @@
 from concurrent import futures
 import grpc
 import video_service_pb2
-from video_service_pb2 import Video
+from video_service_pb2 import Video, Category
 
 import video_service_pb2_grpc
 from ORM_CRUD_videos import DatabaseInterface
@@ -16,7 +16,8 @@ class VideoService():
         try:
             #return latest videos
             if request.latest == True:  
-                if request.category_id:                    
+                #return with a specific category
+                if request.category_id:
                     video_list = self.db.get_latest_videos_category(category_id=request.category_id)
                     if not video_list:
                         return video_service_pb2.VideoResponse(response_code = 'no videos found')
@@ -28,7 +29,7 @@ class VideoService():
                             
                 video_list = self.db.get_latest_videos()
                 #if no videos, return none
-                if not video_list:
+                if video_list == None:
                     return video_service_pb2.VideoResponse(response_code = 'no videos found')
                 videos = []
                 for x in video_list:
@@ -60,20 +61,16 @@ class VideoService():
             return video_service_pb2.VideoResponse(response_code = str(e))
 
         
-    ##These methods are reserved for Apache kafka cluster
-    def PostVideo(self, request, context):
-        video = request.video
-        video = self.db.post_video(user_id=request.user_id, title=request.title, resume=request.resume, category=request.category)
-        if video:
-            return video_service_pb2.VideoResponse(response_code = 'ok')
-        return video_service_pb2.VideoResponse(response_code = 'no videos found')
-
-
-    def DeleteVideo(self, request, context):
-        video = self.db.delete_video(video_id=request.video_id)
-        if video == 'not found':
-            return video_service_pb2.VideoResponse(response_code = 'no videos found')
-        return video_service_pb2.VideoResponse(response_code = 'ok')
+    #Get all categories
+    def GetCategories(self, request, context):
+        categories = self.db.get_categories()
+        if not categories:
+            return video_service_pb2.CategoryResponse(response_code = 'no videos found')
+        category_list = []
+        for x in categories:
+            category = Category(category_id = x.category_id, category = x.category)
+            category_list.append(category)
+        return video_service_pb2.CategoryResponse(categories = category_list, response_code = 'ok')
 
 
 def serve_gRPC():

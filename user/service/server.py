@@ -18,32 +18,23 @@ class UserService(user_service_pb2_grpc.UserServiceServicer):
     
     def GetUser(self, request, context):
         if not request.user_id:
-            print('Recieved GET request: ' + request.email + ". " + str(datetime.now()) + " \n")
             user = self.db.get_user(email=request.email)
             if user:
-                print('Sent GET reply success: ' + request.email + ". " +  str(datetime.now()) + " \n")
                 return user_service_pb2.UserReply(user_id=user.user_id, name=user.name, email=user.email, hashed_password=user.hashed_password, response_code=200)
             else: 
-                print('Sent GET reply failure. ' + str(datetime.now()) + " \n")
                 return user_service_pb2.UserReply(response_code=404)
         else:
-            print('Recieved GET_ID request: ' + str(request.user_id) + ". "+ str(datetime.now()) + " \n")
             user = self.db.get_user_by_id(user_id=request.user_id)
             if user:
-                print('Sent GET_ID reply success: ' + str(request.user_id) + ". " + str(datetime.now()) + " \n")
                 return user_service_pb2.UserReply(user_id=user.user_id, name=user.name, email=user.email, hashed_password=user.hashed_password, response_code=200)
             else: 
-                print('Sent GET_ID reply failure: ' + str(request.user_id) + ". "+ str(datetime.now())+ " \n") 
                 return user_service_pb2.UserReply(response_code=404)
                 
 
     def PostUser(self, request, context):
-        print('Recieved  POST request: ' + request.email + ". " + str(datetime.now()) + " \n")
         user = self.db.post_user(name=request.name, email=request.email, hashed_password=request.hashed_password)
         if user:
-            print('Sent POST reply success: ' + request.email + ". " + str(datetime.now()) + " \n")
             return user_service_pb2.UserReply(user_id=user.user_id, name=user.name, email=user.email, hashed_password=user.hashed_password, response_code=200)
-        print('Sent POST reply failure: ' + request.email + ". " + str(datetime.now()) + " \n")
         return user_service_pb2.UserReply(response_code=404)
 
 

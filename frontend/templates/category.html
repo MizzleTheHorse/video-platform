@@ -5,13 +5,21 @@
 {% block content %}
 
 
-{% for category in categories %}
-<p> {{ category }}</p>
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0]  }}
+            </div>
+        {% endif %}
+{% endwith %}
+
+{% for x in categories %}
+<p> {{ x.category_id }}</p>
 <br>
     <div class="card">
         <header class="card-header">
         <p class="card-header-title">
-            {{ category }}
+            {{ x.category }}
         </p>
         <a href="#" class="card-header-icon" aria-label="more options">
             <span class="icon">
@@ -28,7 +36,7 @@
         </div>
         </div>
         <footer class="card-footer">
-        <a href="#" class="card-footer-item">View category</a>
+        <a href="{{ url_for('content.category_video' , category_id = x.category_id ) }}" class="card-footer-item">View category</a>
         </footer>
     </div>
     <br>

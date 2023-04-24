@@ -9,4 +9,39 @@
   Welcome, {{ name }}!
 </h1>
 </div>
+
+<div class="container has-text-centered"> 
+
+  <h1>
+    View your latest uploaded videos:
+  </h1>
+  </div>
+
+{% for x in user_content %}
+  <div class="box">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-128x128">
+          <img src="https://versions.bulma.io/0.7.5/images/placeholders/128x128.png" alt="Image">
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <a href="{{ url_for('content.get_video' , video_id = x.video_id ) }}" ><strong>{{ x.title }}</strong> </a>
+            <br>
+            {{ x.resume }}
+          </p>
+        </div>
+        
+        <button class="button is-primary is-light" 
+                        hx-post="/watch-video/{{x.video_id}}">
+                        Watch me! 
+        </button>
+      </div>
+    </article>
+  </div>
+{% endfor %}
+
+
 {% endblock %}

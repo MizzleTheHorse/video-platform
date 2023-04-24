@@ -11,7 +11,8 @@ use video_database;
 
 CREATE TABLE category (
     category_id INT PRIMARY KEY,
-    category VARCHAR(255)
+    category VARCHAR(255),
+    description VARCHAR(255)
 ); 
 
 CREATE TABLE video (

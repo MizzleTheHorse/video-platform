@@ -24,14 +24,13 @@
             {{ x.resume }}
           </p>
         </div>
-        <button class="btn btn-primary" 
+        
+        <button class="button is-primary is-light" 
                         hx-post="/watch-video/{{x.video_id}}">
                         Watch me! 
-                    </button>
-            <button class="btn btn-primary" 
-                  hx-post="/rate-video/{{x}}">
-                  Watch me! 
-            </button>
+        </button>
+        {% include 'partials/rate-video.html' %}
+        
         <!--
         <nav class="level is-mobile">
           <div class="level-left">

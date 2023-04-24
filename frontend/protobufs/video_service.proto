@@ -3,8 +3,18 @@ syntax = "proto3";
 
 service VideoService {
   rpc GetVideo (VideoRequest) returns (VideoResponse) {}
-  rpc PostVideo (VideoRequest) returns (VideoResponse) {}
-  rpc DeleteVideo (VideoRequest) returns (VideoResponse) {}
+  rpc GetCategories (CategoryRequest) returns (CategoryResponse) {}
+}
+
+
+message CategoryResponse {
+    repeated Category categories = 1;
+    string response_code = 2;
+}
+
+
+message CategoryRequest {
+  string request = 1;
 }
 
 
@@ -17,30 +27,20 @@ message VideoResponse {
 message VideoRequest {
   int32 user_id = 1;
   int32 video_id = 2;
-  VideoCategory category = 3;
+  int32 category_id = 3;
   bool latest = 4;
   Video video = 5;
 }
-
-
-enum VideoCategory {
-    Sports = 0;
-    Outdoor = 1;
-    Music = 2;
-    Gaming = 3;
-    DIY = 4;
-    Food = 5;
-    Programming = 6;
-    Animals = 7;
-    Education = 8;
-}
-
 
 message Video {
   int32 user_id = 1;
   int32 video_id = 2;
   string title = 3;
   string resume = 4;
-  string category = 5;  
+  int32 category_id = 5;  
 }
 
+message Category {
+  string category = 1;
+  int32 category_id = 2;  
+}

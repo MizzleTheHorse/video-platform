@@ -13,19 +13,25 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x13video_service.proto\">\n\rVideoResponse\x12\x16\n\x06videos\x18\x01 \x03(\x0b\x32\x06.Video\x12\x15\n\rresponse_code\x18\x02 \x01(\t\"m\n\x0cVideoRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x10\n\x08video_id\x18\x02 \x01(\x05\x12\x13\n\x0b\x63\x61tegory_id\x18\x03 \x01(\x05\x12\x0e\n\x06latest\x18\x04 \x01(\x08\x12\x15\n\x05video\x18\x05 \x01(\x0b\x32\x06.Video\"^\n\x05Video\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x10\n\x08video_id\x18\x02 \x01(\x05\x12\r\n\x05title\x18\x03 \x01(\t\x12\x0e\n\x06resume\x18\x04 \x01(\t\x12\x13\n\x0b\x63\x61tegory_id\x18\x05 \x01(\x05\x32\x99\x01\n\x0cVideoService\x12+\n\x08GetVideo\x12\r.VideoRequest\x1a\x0e.VideoResponse\"\x00\x12,\n\tPostVideo\x12\r.VideoRequest\x1a\x0e.VideoResponse\"\x00\x12.\n\x0b\x44\x65leteVideo\x12\r.VideoRequest\x1a\x0e.VideoResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x13video_service.proto\"H\n\x10\x43\x61tegoryResponse\x12\x1d\n\ncategories\x18\x01 \x03(\x0b\x32\t.Category\x12\x15\n\rresponse_code\x18\x02 \x01(\t\"\"\n\x0f\x43\x61tegoryRequest\x12\x0f\n\x07request\x18\x01 \x01(\t\">\n\rVideoResponse\x12\x16\n\x06videos\x18\x01 \x03(\x0b\x32\x06.Video\x12\x15\n\rresponse_code\x18\x02 \x01(\t\"m\n\x0cVideoRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x10\n\x08video_id\x18\x02 \x01(\x05\x12\x13\n\x0b\x63\x61tegory_id\x18\x03 \x01(\x05\x12\x0e\n\x06latest\x18\x04 \x01(\x08\x12\x15\n\x05video\x18\x05 \x01(\x0b\x32\x06.Video\"^\n\x05Video\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x10\n\x08video_id\x18\x02 \x01(\x05\x12\r\n\x05title\x18\x03 \x01(\t\x12\x0e\n\x06resume\x18\x04 \x01(\t\x12\x13\n\x0b\x63\x61tegory_id\x18\x05 \x01(\x05\"1\n\x08\x43\x61tegory\x12\x10\n\x08\x63\x61tegory\x18\x01 \x01(\t\x12\x13\n\x0b\x63\x61tegory_id\x18\x02 \x01(\x05\x32s\n\x0cVideoService\x12+\n\x08GetVideo\x12\r.VideoRequest\x1a\x0e.VideoResponse\"\x00\x12\x36\n\rGetCategories\x12\x10.CategoryRequest\x1a\x11.CategoryResponse\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'video_service_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _VIDEORESPONSE._serialized_start=23
-  _VIDEORESPONSE._serialized_end=85
-  _VIDEOREQUEST._serialized_start=87
-  _VIDEOREQUEST._serialized_end=196
-  _VIDEO._serialized_start=198
-  _VIDEO._serialized_end=292
-  _VIDEOSERVICE._serialized_start=295
-  _VIDEOSERVICE._serialized_end=448
+  _CATEGORYRESPONSE._serialized_start=23
+  _CATEGORYRESPONSE._serialized_end=95
+  _CATEGORYREQUEST._serialized_start=97
+  _CATEGORYREQUEST._serialized_end=131
+  _VIDEORESPONSE._serialized_start=133
+  _VIDEORESPONSE._serialized_end=195
+  _VIDEOREQUEST._serialized_start=197
+  _VIDEOREQUEST._serialized_end=306
+  _VIDEO._serialized_start=308
+  _VIDEO._serialized_end=402
+  _CATEGORY._serialized_start=404
+  _CATEGORY._serialized_end=453
+  _VIDEOSERVICE._serialized_start=455
+  _VIDEOSERVICE._serialized_end=570
 # @@protoc_insertion_point(module_scope)

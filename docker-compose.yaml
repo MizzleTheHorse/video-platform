@@ -89,6 +89,21 @@ services:
         networks:
             shared_network:
 
+    video_consumer_post:
+        build:
+            context: .
+            dockerfile: video_consumer_post/Dockerfile
+        image: video_consumer_post
+        environment:
+            MYSQL_IP: db_video
+        restart: always
+        networks:
+            shared_network:
+
+    
+    
+
+
     kafka1:
         image: confluentinc/cp-kafka:7.2.1
         container_name: kafka1

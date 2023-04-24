@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, Flask, request, render_template, Response, stream_with_context
 from flask import current_app as app
-from flask_login import current_user
+from flask_login import current_user, login_required 
 #from .models import Video
 from kafka import KafkaConsumer, KafkaProducer
 import json
@@ -15,21 +15,9 @@ TOPIC_POST_VIDEO = "video-post-event"
 TOPIC_WATCHED_VIDEO = "video-watch-event"
 TOPIC_RATE_VIDEO = "video-rate-event"
 
-category_list = ['Sports' , 'Outdoor', 'Music', 'Gaming', 'DIY', 'Food', 'Programming', 'Animals', 'Education']
-
-video_dic = {
-  "1": "After returning from their honeymoon and showing home movies to their friends, Shrek and Fiona learn that her parents have heard that she has married her true love and wish to invite him to their kingdom, called Far Far Away. The catch is: Fiona's parents are unaware of the curse that struck their daughter and have assumed she married Prince Charming, not a 700-pound ogre with horrible hygiene and a talking donkey pal.",
-  "2": "Slow-witted Forrest Gump (Tom Hanks) has never thought of himself as disadvantaged, and thanks to his supportive mother (Sally Field), he leads anything but a restricted life. Whether dominating on the gridiron as a college football star, fighting in Vietnam or captaining a shrimp boat, Forrest inspires people with his childlike optimism. But one person Forrest cares about most may be the most difficult to save -- his childhood love, the sweet but troubled Jenny (Robin Wright).",
-  "3": "This sweeping drama, based on real historical events, follows American boyhood friends Rafe McCawley (Ben Affleck) and Danny Walker (Josh Hartnett) as they enter World War II as pilots. Rafe is so eager to take part in the war that he departs to fight in Europe alongside England's Royal Air Force. On the home front, his girlfriend, Evelyn (Kate Beckinsale), finds comfort in the arms of Danny. The three of them reunite in Hawaii just before the Japanese attack on Pearl Harbor.",
-  "test": "test test test ", 
-  "test2": "test test test ", 
-  "test3": "test test test ", 
-  "test4": "test test test ", 
-  "test5": "test test test ", 
-  "test6": "test test test ", 
-  "test7": "test test test ", 
-}
-
+def category_to_id(category):
+    #map category to id 
+    raise NotImplemented
 
 
 def stream_template(template_name, **context):
@@ -44,18 +32,34 @@ def stream_template(template_name, **context):
 @content.route('/latest')
 def latest():
     video = client.get_latest_videos()
-    return render_template('latest.html', content=video.videos)
+    reversed = video.videos.reverse()
+    if not video:
+        flash('No videos are available yet, be the first to upload!')
+        return redirect(url_for('content.video'))
+    return render_template('latest.html', content=reversed)
 
 
 @content.route('/category')
 def category():
-    return render_template('category.html', categories=category_list)
+    content = client.get_categories()
+    return render_template('category.html', categories=content.categories)
+
+
+@content.route('/category/<int:category_id>', methods=['GET'])
+def category_video(category_id):
+    content = client.get_latest_videos_category(category_id)
+    if not content:
+        flash('No videos are available for this category')
+        return redirect(url_for('content.category'))
+    return render_template('category_videos.html', content=content.videos)
+
 
 
 @content.route('/video', methods=['GET', 'POST'])
 def video():
     if request.method == 'POST':
         try:
+            #category_id = category_to_id(request.form.get("category"))
             producer = KafkaProducer(
             bootstrap_servers='kafka1:9092', 
             value_serializer=lambda v: json.dumps(v).encode('ascii'),
@@ -67,7 +71,7 @@ def video():
                 "user_id": 1,
                 "title": request.form.get("title"),
                 "resume": request.form.get("resume"),
-                "category": request.form.get("category")
+                "category_id": 1
             })
             producer.flush()
             flash('Uploaded video, check /view to see.')
@@ -75,7 +79,6 @@ def video():
         except Exception as e: 
             flash('No brokers are available, try again later. Error: ' + str(e))
             return redirect(url_for('content.video')) # if user doesn't exist or password is wrong, reload the page
-
     else:
         return render_template('upload.html')
 
@@ -116,42 +119,58 @@ def view():
     return Response(stream_with_context(stream_template('video.html', data=consume_msg())))
 
 
+@content.route('/profile')
+@login_required
+def profile():
+    user_content = client.get_latest_videos_user(current_user.user_id)
+    return render_template('profile.html', name=current_user.name, user_content=user_content.videos)
+
+
 
 @content.route('/watch-video/<int:id>', methods=['POST'])
 def video_watched_event(id):
     try:
+        #user_id = current_user.user_id
+
         producer = KafkaProducer(
         bootstrap_servers='kafka1:9092', 
         value_serializer=lambda v: json.dumps(v).encode('ascii'),
         key_serializer=lambda v: json.dumps(v).encode('ascii'))
         producer.send(
-        TOPIC_POST_VIDEO,
+        TOPIC_WATCHED_VIDEO,
         key={"video_id": id},
         value={
-            "user_id": current_user
+            "user_id": 1
         })
         producer.flush()
         return 'Video successfully watched'
     except Exception as e:
-        return 'Video event failed'
+        print(str(e))
+        return 'Video watch event failed'
     
-#
-@content.route('/rate-video/<int:rating>', methods=['POST'])
-def video_rated_event(id):
+
+@content.route('/rate-video', methods=['POST'])
+def video_rated_event():
     try:
+        rating = request.form.get('rating')
+        video_id = request.form.get('current_video')
+        #user_id = current_user.user_id
+
+
         producer = KafkaProducer(
         bootstrap_servers='kafka1:9092', 
         value_serializer=lambda v: json.dumps(v).encode('ascii'),
         key_serializer=lambda v: json.dumps(v).encode('ascii'))
         producer.send(
         TOPIC_RATE_VIDEO,
-        key={"video_id": id},
+        key={"video_id": video_id},
         value={
-            "user_id": current_user
-            "rating" : 
+            "user_id": 1,
+            "rating" : rating
         })
         producer.flush()
-        return 'Video successfully watched'
+        return 'Video successfully rated'
     except Exception as e:
-        return 'Video event failed'
+        print(str(e))
+        return 'Video rate event failed'
   

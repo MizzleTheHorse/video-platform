@@ -1,22 +1,17 @@
-<!-- templates/video.html -->
+<!-- templates/signup.html -->
+
 {% extends "base.html" %}
 
 {% block content %}
 
+
 <h1 class="title">
-    Viewing single video
+    Viewing latest videos for category {{ content[0].category_id }}
   </h1>
+
+
+{% for x in content %}
   
-
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-      <div class="notification is-info">
-          {{ messages[0] }}
-      </div>
-  {% endif %}
-  {% endwith %}
-
-{% for x in video %}
     <div class="box">
       <article class="media">
         <div class="media-left">
@@ -27,16 +22,20 @@
         <div class="media-content">
           <div class="content">
             <p>
-              <strong>{{ x.title }}</strong>
+              <a href="{{ url_for('content.get_video' , video_id = x.video_id ) }}" ><strong>{{ x.title }}</strong> </a>
               <br>
               {{ x.resume }}
             </p>
           </div>
+          
+          <button class="button is-primary is-light" 
+                          hx-post="/watch-video/{{x.video_id}}">
+                          Watch me! 
+          </button>
           {% include 'partials/rate-video.html' %}
         </div>
       </article>
     </div>
-  
   {% endfor %}
-
+  
   {% endblock %}

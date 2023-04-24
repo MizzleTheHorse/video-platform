@@ -1,6 +1,6 @@
 import os, grpc, sys
 sys.path.append('.')
-from video_service_pb2 import VideoRequest
+from video_service_pb2 import VideoRequest, CategoryRequest
 from video_service_pb2_grpc import VideoServiceStub
 from .models import User
 
@@ -41,6 +41,13 @@ class VideoClient():
     def get_latest_videos_user(self, user_id):
         request = VideoRequest(user_id=user_id)
         response = video_client.GetVideo(request)
+        if not response.response_code =='ok':
+            return None
+        return response
+    
+    def get_categories(self):
+        request = CategoryRequest(request = 'get categories')
+        response = video_client.GetCategories(request)
         if not response.response_code =='ok':
             return None
         return response
