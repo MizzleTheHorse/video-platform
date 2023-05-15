@@ -12,12 +12,24 @@ content = Blueprint('content', __name__)
 client = VideoClient()
 
 TOPIC_POST_VIDEO = "video-post-event"
+TOPIC_DELETE_VIDEO = "video-post-event"
+
 TOPIC_WATCHED_VIDEO = "video-watch-event"
 TOPIC_RATE_VIDEO = "video-rate-event"
 
-def category_to_id(category):
-    #map category to id 
-    raise NotImplemented
+
+category_dict = {
+    0 : 'Sports',
+    1 : 'Outdoor',
+    2 : 'Music',
+    3 : 'Gaming',
+    4 : 'DIY',
+    5 : 'Food',
+    6 : 'Programming',
+    7 : 'Animals',
+    8 : 'Education'
+}
+
 
 
 def stream_template(template_name, **context):
@@ -32,11 +44,14 @@ def stream_template(template_name, **context):
 @content.route('/latest')
 def latest():
     video = client.get_latest_videos()
-    reversed = video.videos.reverse()
+    video_list = []
     if not video:
         flash('No videos are available yet, be the first to upload!')
         return redirect(url_for('content.video'))
-    return render_template('latest.html', content=reversed)
+    for x in video.videos:
+        video_list.append(x)
+    video_list.reverse()
+    return render_template('latest.html', content=video_list)
 
 
 @content.route('/category')
@@ -48,10 +63,11 @@ def category():
 @content.route('/category/<int:category_id>', methods=['GET'])
 def category_video(category_id):
     content = client.get_latest_videos_category(category_id)
+    category = category_dict[category_id]
     if not content:
         flash('No videos are available for this category')
         return redirect(url_for('content.category'))
-    return render_template('category_videos.html', content=content.videos)
+    return render_template('category_videos.html', content=content.videos, category=category)
 
 
 
@@ -59,19 +75,25 @@ def category_video(category_id):
 def video():
     if request.method == 'POST':
         try:
-            #category_id = category_to_id(request.form.get("category"))
+            if current_user.is_authenticated:
+                user_id = current_user.user_id
+            else:
+                user_id = 0
+            
+            category_id = [k for k, v in category_dict.items() if v == request.form.get("category")]
             producer = KafkaProducer(
             bootstrap_servers='kafka1:9092', 
             value_serializer=lambda v: json.dumps(v).encode('ascii'),
             key_serializer=lambda v: json.dumps(v).encode('ascii'))
             producer.send(
             TOPIC_POST_VIDEO,
-            key={"video_id": 'test123'},
+            key={"video-event": 'POST'},
             value={
-                "user_id": 1,
+                "user_id": user_id,
                 "title": request.form.get("title"),
                 "resume": request.form.get("resume"),
-                "category_id": 1
+                "category_id": category_id, 
+                "category" : request.form.get("category")
             })
             producer.flush()
             flash('Uploaded video, check /view to see.')
@@ -123,7 +145,10 @@ def view():
 @login_required
 def profile():
     user_content = client.get_latest_videos_user(current_user.user_id)
-    return render_template('profile.html', name=current_user.name, user_content=user_content.videos)
+    if user_content:
+        user_content = user_content.videos
+    return render_template('profile.html', name=current_user.name, user_content=user_content)
+    
 
 
 

@@ -7,7 +7,8 @@ class DatabaseInterface:
     def __init__(self):
         pass
     
-    def get_video(self, video_id=None, user_id=None):
+
+    def get_user_videos(self):
         with Session() as session:
             try:
                 if id:
@@ -29,7 +30,7 @@ class DatabaseInterface:
             finally:
                 session.close()
 
-    def post_video(self, user_id, title, resume=None, category_id=None, category=None):
+    def recommend_from_views(self, user_id, title, resume=None, category_id=None, category=None):
         with Session() as session:
             try: 
                 video = Video(user_id=user_id, title=title, resume=resume, category_id=category_id, category=category)
@@ -44,7 +45,7 @@ class DatabaseInterface:
                 session.close()
             
     
-    def delete_video(self, id):
+    def recommend_from_rates(self, id):
         with Session() as session:
             try: 
                 video = (session.query(Video).filter(Video.video_id == id).first())
@@ -58,48 +59,3 @@ class DatabaseInterface:
                 return str(e)
             finally:
                 session.close()
-            
-
-
-    #Returns last 10 videos
-    def get_latest_videos(self):
-        with Session() as session:
-            try: 
-                result = (session.query(Video).limit(10).all())
-                return result
-            except OperationalError as e:
-                print('an error occured' + str(e))
-
-    #Returns last 5 videos
-    def get_latest_videos_user(self, id):
-        with Session() as session:
-            try: 
-                result = (session.query(Video).filter(Video.user_id == id).limit(10).all())
-                return result
-            except OperationalError as e:
-                print('an error occured' + str(e))
-
-    
-    #Returns last 10 videos of a particular catoergy 
-    def get_latest_videos_category(self, category_id):
-        with Session() as session:
-            try: 
-                result = (session.query(Video).filter(Video.category_id == category_id).limit(10).all())
-                return result
-            except OperationalError as e:
-                print('an error occured' + str(e))
-
-    def get_categories(self):
-        with Session() as session:
-            try: 
-                result = (session.query(Category).all())
-                return result
-            except OperationalError as e:
-                print('an error occured' + str(e))
-
-    
-    
-    
-
-# Create:
-#video = Video(video_id=10, name='test_name', email='test_mail', hashed_password='$½¡@£#¤øæåÅØÆEOL')

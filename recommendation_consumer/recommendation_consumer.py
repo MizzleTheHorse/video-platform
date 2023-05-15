@@ -1,43 +1,17 @@
 from kafka import KafkaConsumer
 import json
 from db_connection import Session
-from models import Video, Category
+from models import UserAction
 
-TOPIC_POST_VIDEO = "video-post-event"
+TOPIC_RATE_WATCH = "video-rate-watch-event"
 
-def post_video(user_id, title, resume=None, category=None, category_id=None):
+def post_user_action(action, user_id, video_id):
         with Session() as session:
             try: 
                 video = Video(user_id=user_id, title=title, resume=resume,  category_id=category_id, category=category)
                 session.add(video)
                 session.commit()
                 session.close()
-                return None
-            except Exception as e: 
-                return str(e)
-            finally:
-                session.close()
-
-def delete_video(id):
-        with Session() as session:
-            try: 
-                video = (session.query(Video).filter(Video.video_id == id).first())
-                if video:
-                    session.delete(video)
-                    session.commit()
-                    return video
-                else: 
-                    return 'not found'
-            except Exception as e: 
-                return str(e)
-            finally:
-                session.close()
-
-def add_like_video(id):
-     with Session() as session:
-            try: 
-                session.query(Video).filter_by(video_id=id).update({'video_rating': Video.video_rating + 1})
-                session.commit()
                 return None
             except Exception as e: 
                 return str(e)
@@ -55,8 +29,7 @@ consumer = KafkaConsumer(
         session_timeout_ms=6000,
         heartbeat_interval_ms=3000
     )
-consumer.subscribe(topics=[TOPIC_POST_VIDEO])
-
+consumer.subscribe(topics=[TOPIC_RATE_WATCH])
 
 
 try:

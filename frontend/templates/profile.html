@@ -16,7 +16,7 @@
     View your latest uploaded videos:
   </h1>
   </div>
-
+{% if user_content  %}
 {% for x in user_content %}
   <div class="box">
     <article class="media">
@@ -42,6 +42,8 @@
     </article>
   </div>
 {% endfor %}
+{% endif %}
+
 
 
 {% endblock %}

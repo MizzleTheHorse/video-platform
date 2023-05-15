@@ -37,7 +37,8 @@ message Video {
   int32 video_id = 2;
   string title = 3;
   string resume = 4;
-  int32 category_id = 5;  
+  string category = 5;
+  int32 category_id = 6;  
 }
 
 message Category {

@@ -42,6 +42,9 @@
                                 Logout
                             </a>
                             {% endif %}
+                            <a href="{{ url_for('main.index') }}" class="navbar-item">
+                                Recommended 
+                            </a>
                             <div class="navbar-item has-dropdown is-hoverable has-text-white">
                                 <a href="{{ url_for('content.video') }}" class="navbar-item has-text-white">
                                     Videos

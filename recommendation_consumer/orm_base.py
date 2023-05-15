@@ -3,5 +3,3 @@ from sqlalchemy.schema import MetaData
 
 Base = declarative_base(metadata=MetaData(schema="data"))
 metadata = Base.metadata
-
-

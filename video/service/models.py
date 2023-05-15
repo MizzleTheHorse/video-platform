@@ -16,10 +16,11 @@ class Video(Base):
     user_id: Mapped[int]
     title: Mapped[str] = mapped_column(String(50))
     resume: Mapped[Optional[str]] = mapped_column(String(255))
-    #category: Mapped[str] = mapped_column(String(255), ForeignKey("category.category")) 
+    category: Mapped[str] = mapped_column(String(255)) 
     category_id: Mapped[int] = mapped_column(ForeignKey("category.category_id"))
+    video_rating: Mapped[int]
 
-    
+
     def __repr__(self) -> str:
        return f"Video (id={self.video_id!r}, user_id={self.user_id!r}, title={self.title!r},  category_id={self.category_id!r})"
     
@@ -30,6 +31,6 @@ class Category(Base):
     category_id: Mapped[int] = mapped_column(primary_key=True)
     category: Mapped[str] = mapped_column(String(255))
     description: Mapped[str] = mapped_column(String(255))
-
+    
     def __repr__(self) -> str:
         return f"Category (id={self.category_id!r}, category={self.category!r})"

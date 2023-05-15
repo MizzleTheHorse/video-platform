@@ -16,8 +16,9 @@ class Video(Base):
     user_id: Mapped[int]
     title: Mapped[str] = mapped_column(String(50))
     resume: Mapped[Optional[str]] = mapped_column(String(255))
-    #category: Mapped[str] = mapped_column(String(255), ForeignKey("category.category")) 
+    category: Mapped[str] = mapped_column(String(255)) 
     category_id: Mapped[int] = mapped_column(ForeignKey("category.category_id"))
+    video_rating: Mapped[int]
 
     
     def __repr__(self) -> str:

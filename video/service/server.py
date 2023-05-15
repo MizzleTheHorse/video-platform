@@ -23,7 +23,7 @@ class VideoService():
                         return video_service_pb2.VideoResponse(response_code = 'no videos found')
                     videos = []
                     for x in video_list:
-                        video = Video(user_id = x.user_id, video_id = x.video_id, title = x.title, resume = x.resume,  category_id = x.category_id)
+                        video = Video(user_id = x.user_id, video_id = x.video_id, title = x.title, resume = x.resume, category=x.category, category_id = x.category_id)
                         videos.append(video)
                     return video_service_pb2.VideoResponse(videos = videos, response_code = 'ok')
                             
@@ -33,13 +33,13 @@ class VideoService():
                     return video_service_pb2.VideoResponse(response_code = 'no videos found')
                 videos = []
                 for x in video_list:
-                    video = Video(user_id = x.user_id, video_id = x.video_id, title = x.title, resume = x.resume,  category_id = x.category_id)
+                    video = Video(user_id = x.user_id, video_id = x.video_id, title = x.title, resume = x.resume, category=x.category, category_id = x.category_id)
                     videos.append(video)
                 return video_service_pb2.VideoResponse(videos = videos, response_code = 'ok')
             #get 1 video 
             if request.video_id:
                 model = self.db.get_video(video_id=request.video_id)
-                video = Video(user_id = model.user_id, video_id = model.video_id, title = model.title, resume = model.resume,  category_id = model.category_id)
+                video = Video(user_id = model.user_id, video_id = model.video_id, title = model.title, resume = model.resume,  category_id = model.category_id, category=model.category)
                 video_list = []
                 video_list.append(video)
                 #return video with ID
@@ -52,7 +52,7 @@ class VideoService():
                     return video_service_pb2.VideoResponse(response_code = 'no videos found')
                 videos = []
                 for x in video_list:
-                    video = Video(user_id = x.user_id, video_id = x.video_id, title = x.title, resume = x.resume,  category_id = x.category_id)
+                    video = Video(user_id = x.user_id, video_id = x.video_id, title = x.title, resume = x.resume,  category_id = x.category_id, category=x.category)
                     videos.append(video)
                 #return video with ID
                 return video_service_pb2.VideoResponse(videos = videos, response_code = 'ok')
@@ -71,6 +71,8 @@ class VideoService():
             category = Category(category_id = x.category_id, category = x.category)
             category_list.append(category)
         return video_service_pb2.CategoryResponse(categories = category_list, response_code = 'ok')
+    
+    
 
 
 def serve_gRPC():

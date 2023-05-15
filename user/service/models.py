@@ -23,6 +23,7 @@ class User(Base):
     def __repr__(self) -> str:
         return f"User(user_id={self.user_id!r}, name={self.name!r}, email={self.email!r},  password={self.hashed_password!r})"
 
+
 #Might refactor, of no use here, maybe move to recommendation service 
 class UserAction(Base):
     __tablename__ = "UserAction"

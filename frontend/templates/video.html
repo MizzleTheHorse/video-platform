@@ -16,6 +16,7 @@
   {% endif %}
   {% endwith %}
 
+{% if video %}
 {% for x in video %}
     <div class="box">
       <article class="media">
@@ -32,11 +33,20 @@
               {{ x.resume }}
             </p>
           </div>
+          <p>
+            <a href="{{ url_for('content.category_video' , category_id = x.category_id ) }}" ><strong>Category: {{ x.category }}  </strong> </a>
+          </p>
+          <button class="button is-primary is-light" 
+                          hx-post="/watch-video/{{x.video_id}}">
+                          Watch me! 
+          </button>
           {% include 'partials/rate-video.html' %}
         </div>
       </article>
     </div>
   
   {% endfor %}
+  {% endif %}
+
 
   {% endblock %}
