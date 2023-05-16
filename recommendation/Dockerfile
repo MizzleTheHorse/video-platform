@@ -1,25 +1,18 @@
-FROM python
+FROM python:3.9
 
 ENV PYTHONUNBUFFERED=1
 
-RUN mkdir /system
 
-COPY protobufs/ /system/protobufs/
-COPY service/ /system/service/
-COPY requirements.txt/ /system/
+WORKDIR /code
 
-WORKDIR /system
+COPY ./requirements.txt /code/requirements.txt
 
-RUN python -m pip install --upgrade pip
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-RUN python -m pip install -r requirements.txt
+COPY ./app /code/app
 
-RUN python -m grpc_tools.protoc -I protobufs --python_out=/system/service/ \
+EXPOSE 80
 
-           --grpc_python_out=/system/service/ protobufs/video_service.proto
+CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80"]
 
-
-EXPOSE 50051
-
-
-ENTRYPOINT ["python", "service/server.py"]
+#ENTRYPOINT ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80"]

@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Index, Integer, String, TIMESTAMP, text, UniqueConstraint
+from sqlalchemy import Column, Index, Integer, String, TIMESTAMP, text, UniqueConstraint, ForeignKey
 from typing import Optional
 from sqlalchemy.orm import Mapped, mapped_column
-from orm_base import Base
+from .orm_base import Base
 
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -20,9 +20,11 @@ class UserAction(Base):
     def __repr__(self) -> str:
         return f"User Action(user_id={self.user_id!r}, user_action_id={self.user_action_id!r}, video_id={self.video_id!r})"
     
-
+'''
 class Recommendation(Base):
     __tablename__ = "Recommendation"
+
+    
 
     user_id: Mapped[int] = mapped_column()
     most_watched_category_id: Mapped[int] = mapped_column()
@@ -30,6 +32,5 @@ class Recommendation(Base):
 
     def __repr__(self) -> str:
         return f"User Action(user_id={self.user_id!r}, user_action_id={self.user_action_id!r}, video_id={self.video_id!r})"
-    
-
+'''
 

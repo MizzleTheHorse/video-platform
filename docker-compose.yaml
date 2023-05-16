@@ -89,6 +89,45 @@ services:
         networks:
             shared_network:
 
+    
+    recommendation_service:
+        build:
+            context: .
+            dockerfile: recommendation/Dockerfile
+        image: recommendation_service  
+        restart: always
+        environment:
+            MYSQL_IP: db_recommendation
+        depends_on:
+            - db_recommendation
+        ports:
+        - 80:80
+        volumes:
+            - recommendation_service:/system/service/instance/
+            - /tmp/recommendation_service/mysqld:/var/run/mysqld.sock
+        networks:
+            shared_network:
+    
+    db_recommendation:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password        
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            #MYSQL_USER: recommendation_host
+            #MYSQL_PASSWORD: secret
+            MYSQL_DATABASE: recommendation_database
+            MYSQL_TCP_PORT: 3308
+        ports:
+        - 3308:3308
+        expose:
+            - 3308
+        restart: always
+        volumes:
+            - "./recommendation/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql"
+            - recommendation_service_db:/var/lib/mysql
+        networks:
+            shared_network:
+
     video_consumer_post:
         build:
             context: .
@@ -99,10 +138,17 @@ services:
         restart: always
         networks:
             shared_network:
-
     
-    
-
+    #recommendation_consumer:
+    #    build:
+    #        context: .
+    #        dockerfile: video_consumer_post/Dockerfile
+    #    image: video_consumer_post
+    #    environment:
+    #        MYSQL_IP: recommendation_video
+    #    restart: always
+    #    networks:
+    #        shared_network:
 
     kafka1:
         image: confluentinc/cp-kafka:7.2.1
@@ -176,8 +222,11 @@ services:
 volumes:
   user_service_db:
   video_service_db:
+  recommendation_service_db:
   user_service:
   video_service:
+  recommendation_service:
+
 
 
 networks:
