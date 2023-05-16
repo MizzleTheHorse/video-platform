@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./video_consumer.py" ]
+CMD [ "python", "./recommendation_consumer.py" ]

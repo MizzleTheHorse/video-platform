@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Index, Integer, String, TIMESTAMP, text, UniqueConstraint
+from sqlalchemy import Column, Index, Integer, String, TIMESTAMP, text, UniqueConstraint, ForeignKey
 from typing import Optional
 from sqlalchemy.orm import Mapped, mapped_column
 from orm_base import Base
@@ -9,10 +9,8 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
-#Might refactor, of no use here, maybe move to recommendation service 
 class UserAction(Base):
     __tablename__ = "UserAction"
-    src_address = Column(String(50), index=True)
 
     user_action_id: Mapped[int] = mapped_column(primary_key=True)
     action: Mapped[str] = mapped_column(String(255))

@@ -139,16 +139,16 @@ services:
         networks:
             shared_network:
     
-    #recommendation_consumer:
-    #    build:
-    #        context: .
-    #        dockerfile: video_consumer_post/Dockerfile
-    #    image: video_consumer_post
-    #    environment:
-    #        MYSQL_IP: recommendation_video
-    #    restart: always
-    #    networks:
-    #        shared_network:
+    recommendation_consumer:
+        build:
+            context: .
+            dockerfile: recommendation_consumer/Dockerfile
+        image: recommendation_consumer
+        environment:
+            MYSQL_IP: db_recommendation
+        restart: always
+        networks:
+            shared_network:
 
     kafka1:
         image: confluentinc/cp-kafka:7.2.1

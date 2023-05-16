@@ -17,6 +17,9 @@ TOPIC_DELETE_VIDEO = "video-post-event"
 TOPIC_WATCHED_VIDEO = "video-watch-event"
 TOPIC_RATE_VIDEO = "video-rate-event"
 
+TOPIC_RATE_WATCH_VIDEO = "video-rate-watch-event"
+
+
 
 category_dict = {
     0 : 'Sports',
@@ -155,17 +158,21 @@ def profile():
 @content.route('/watch-video/<int:id>', methods=['POST'])
 def video_watched_event(id):
     try:
-        #user_id = current_user.user_id
 
+        user_id = current_user.user_id
+        video_id = id
+        
         producer = KafkaProducer(
         bootstrap_servers='kafka1:9092', 
         value_serializer=lambda v: json.dumps(v).encode('ascii'),
         key_serializer=lambda v: json.dumps(v).encode('ascii'))
         producer.send(
-        TOPIC_WATCHED_VIDEO,
-        key={"video_id": id},
+        TOPIC_RATE_WATCH_VIDEO,
+        key={"event": TOPIC_RATE_WATCH_VIDEO},
         value={
-            "user_id": 1
+            "user_id": user_id,
+            "video_id": video_id,
+            "action": "watch-event"
         })
         producer.flush()
         return 'Video successfully watched'
@@ -177,21 +184,21 @@ def video_watched_event(id):
 @content.route('/rate-video', methods=['POST'])
 def video_rated_event():
     try:
-        rating = request.form.get('rating')
-        video_id = request.form.get('current_video')
-        #user_id = current_user.user_id
 
+        video_id = request.form.get('current_video')
+        user_id = current_user.user_id
 
         producer = KafkaProducer(
         bootstrap_servers='kafka1:9092', 
         value_serializer=lambda v: json.dumps(v).encode('ascii'),
         key_serializer=lambda v: json.dumps(v).encode('ascii'))
         producer.send(
-        TOPIC_RATE_VIDEO,
-        key={"video_id": video_id},
+        TOPIC_RATE_WATCH_VIDEO,
+        key={"event": TOPIC_RATE_WATCH_VIDEO},
         value={
-            "user_id": 1,
-            "rating" : rating
+            "user_id": user_id,
+            "video_id": video_id,
+            "action" : 'rate-event'
         })
         producer.flush()
         return 'Video successfully rated'

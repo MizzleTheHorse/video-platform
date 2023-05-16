@@ -8,8 +8,8 @@ TOPIC_RATE_WATCH = "video-rate-watch-event"
 def post_user_action(action, user_id, video_id):
         with Session() as session:
             try: 
-                video = Video(user_id=user_id, title=title, resume=resume,  category_id=category_id, category=category)
-                session.add(video)
+                useraction = UserAction(user_id=user_id, video_id=video_id, action=action)
+                session.add(useraction)
                 session.commit()
                 session.close()
                 return None
@@ -31,18 +31,13 @@ consumer = KafkaConsumer(
     )
 consumer.subscribe(topics=[TOPIC_RATE_WATCH])
 
-
 try:
     for message in consumer:
-        print(message.key)
-        post_video(
+        post_user_action(
              user_id=message.value["user_id"], 
-             title=message.value["title"], 
-             resume=message.value["resume"], 
-             category_id=message.value["category_id"], 
-             category=message.value["category"]
+             video_id=message.value["video_id"], 
+             action=message.value["action"]
              )
         
-
 except Exception as e:
      print(str(e))
