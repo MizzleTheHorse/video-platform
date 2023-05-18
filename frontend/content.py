@@ -22,7 +22,7 @@ TOPIC_RATE_WATCH_VIDEO = "video-rate-watch-event"
 
 
 category_dict = {
-    0 : 'Sports',
+    9 : 'Sports',
     1 : 'Outdoor',
     2 : 'Music',
     3 : 'Gaming',
@@ -66,6 +66,8 @@ def category():
 @content.route('/category/<int:category_id>', methods=['GET'])
 def category_video(category_id):
     content = client.get_latest_videos_category(category_id)
+    print(category_id)
+    print(content)
     category = category_dict[category_id]
     if not content:
         flash('No videos are available for this category')

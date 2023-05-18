@@ -18,7 +18,7 @@ class UserAction(Base):
     video_id: Mapped[int] = mapped_column()
     
     def __repr__(self) -> str:
-        return f"User Action(user_id={self.user_id!r}, user_action_id={self.user_action_id!r}, video_id={self.video_id!r})"
+        return f"{self.video_id!r}"
     
 '''
 class Recommendation(Base):

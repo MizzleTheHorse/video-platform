@@ -1,0 +1,58 @@
+<!-- templates/video.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="title">
+  View Recommended Videos 
+</h1>
+
+
+{% if not current_user.is_authenticated %}
+<p>Log in to view recommendations based on previously watched and rated videos </p>
+{% endif %}
+
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-info">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+
+
+
+{% for x in content %}
+  <div class="box">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-128x128">
+          <img src="https://versions.bulma.io/0.7.5/images/placeholders/128x128.png" alt="Image">
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <a href="{{ url_for('content.get_video' , video_id = x.video_id ) }}" ><strong>{{ x.title }}</strong> </a>
+            <br>
+            {{ x.resume }}
+          </p>
+        </div>
+        <p>
+          <a href="{{ url_for('content.category_video' , category_id = x.category_id ) }}" ><strong>Category: {{ x.category }}  </strong> </a>
+        </p>
+        
+        <button class="button is-primary is-light" 
+                        hx-post="/watch-video/{{x.video_id}}">
+                        Watch me! 
+        </button>
+        {% include 'partials/rate-video.html' %}
+      </div>
+    </article>
+  </div>
+{% endfor %}
+
+{% endblock %}

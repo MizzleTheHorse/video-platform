@@ -28,7 +28,7 @@ CREATE TABLE video (
 
 
 INSERT INTO category (category_id, category, description)
-VALUES (0, 'Sports', 'The sports category features all the themes and disciplines regarding sports. ');
+VALUES (9, 'Sports', 'The sports category features all the themes and disciplines regarding sports. ');
 
 INSERT INTO category (category_id, category, description)
 VALUES (1, 'Outdoor', 'for everything outdoors');

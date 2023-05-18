@@ -10,7 +10,7 @@ class DatabaseInterface:
     def get_latest_user_actions(self, user_id):
         with Session() as session:
             try: 
-                result = (session.query(UserAction).filter(UserAction.user_id == user_id).limit(5).all())
+                result = (session.query(UserAction).filter(UserAction.user_id == user_id).limit(10).all())
                 return result
             except OperationalError as e:
                 print('an error occured' + str(e))

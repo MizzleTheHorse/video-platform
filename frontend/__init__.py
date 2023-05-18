@@ -43,4 +43,8 @@ def create_app():
     from .content import content as content_blueprint
     app.register_blueprint(content_blueprint)
 
+    # blueprint for 
+    from .recommendation import recommendation as recommendation_blueprint
+    app.register_blueprint(recommendation_blueprint)
+
     return app

@@ -8,9 +8,10 @@ services:
         environment:
             USER_SERVICE_HOST: user_service
             VIDEO_SERVICE_HOST: video_service
+            RECOMMENDATION_IP: recommendation_service
         restart: always
-
         image: frontend
+
         networks:
             shared_network:
         ports:

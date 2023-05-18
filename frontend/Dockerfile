@@ -8,9 +8,7 @@ COPY . /frontend
 
 WORKDIR /frontend
 
-RUN python -m pip install --upgrade pip
-
-RUN python -m pip install -r requirements.txt
+RUN python -m pip install --no-cache-dir --upgrade -r requirements.txt
 
 #uninstall broken package
 RUN python -m pip install markupsafe==2.0.1
