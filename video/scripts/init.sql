@@ -61,19 +61,22 @@ INSERT INTO category (category_id, category, description)
 VALUES (8, 'Education', 'Time to get smart and learn some new stuff');
 
 INSERT INTO video (title, user_id, resume, category , category_id)
-VALUES ('Food video', '10', 'Video omkring mad', 'Food', 5);
+VALUES ('Pasta tutorial 101', '10', 'How to make Pasta for complete dummies and software engineers', 'Food', 5);
 
 INSERT INTO video (title, user_id, resume, category, category_id)
-VALUES ('animal video', '10', 'Cute fucking doggos', 'Animals', 7);
+VALUES ('Cat slapping another cat', '10', 'These silly animals will just slap each other all day', 'Animals', 7);
 
 INSERT INTO video (title, user_id, resume, category, category_id)
-VALUES ('random video', '10', 'amagermanden er stadig sluppet fri', 'Programming', 6);
+VALUES ('Python Tutorial part 1', '10', 'In this episode of the programming dude, we are going to look at python, a great langauage everyone can learn!', 'Programming', 6);
 
 INSERT INTO video (title, user_id, resume, category,  category_id)
-VALUES ('test video', '11', 'amagermanden er fanget igen', 'Programming', 6);
+VALUES ('Javascript death tutorial', '11', 'You cant learn javascript without actively hating yourself and eveyone around you, join the club', 'Programming', 6);
 
 INSERT INTO video (title, user_id, resume, category, category_id)
-VALUES ('lol video', '11', 'amagermanden er ked af det', 'Programming', 6);
+VALUES ('assembly tutorial for experts, part 420', '11', 'Why are we even here, just to suffer?', 'Programming', 6);
 
 INSERT INTO video (title, user_id, resume, category, category_id)
-VALUES ('programming video', '11', 'JEG kan godt lide pythons','Animals', 7);
+VALUES ('Big python escapes Zoo, must watch!', '11', 'Snek go brrrrrr.','Animals', 7);
+
+INSERT INTO video (title, user_id, resume, category, category_id)
+VALUES ('Hiking in Nepal mountains', '10', 'This video is about hiking in the nepalese mountains, with a beautfil scenary!','Outdoor', 1);

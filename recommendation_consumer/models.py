@@ -15,6 +15,7 @@ class UserAction(Base):
     user_action_id: Mapped[int] = mapped_column(primary_key=True)
     action: Mapped[str] = mapped_column(String(255))
     user_id: Mapped[int] = mapped_column()
+    category_id: Mapped[int] = mapped_column()
     video_id: Mapped[int] = mapped_column()
     
     def __repr__(self) -> str:

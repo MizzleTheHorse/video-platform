@@ -1,6 +1,7 @@
 {% if current_user.is_authenticated %}
 <form  method="post"> 
     <input type="hidden" id="current_video" name="current_video" value="{{ x.video_id }}">
+    <input type="hidden" id="category_id" name="category_id" value="{{ x.category_id }}">
     <button class="button is-link is-light" hx-post="/rate-video">Rate Video</button>
   </form>
 {% endif %}

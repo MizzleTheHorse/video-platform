@@ -5,10 +5,10 @@ from models import UserAction
 
 TOPIC_RATE_WATCH = "video-rate-watch-event"
 
-def post_user_action(action, user_id, video_id):
+def post_user_action(action, user_id, category_id, video_id):
         with Session() as session:
             try: 
-                useraction = UserAction(user_id=user_id, video_id=video_id, action=action)
+                useraction = UserAction(user_id=user_id, video_id=video_id, category_id=category_id, action=action)
                 session.add(useraction)
                 session.commit()
                 session.close()
@@ -36,6 +36,7 @@ try:
         post_user_action(
              user_id=message.value["user_id"], 
              video_id=message.value["video_id"], 
+             category_id=message.value['category_id'],
              action=message.value["action"]
              )
         

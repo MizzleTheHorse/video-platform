@@ -13,27 +13,14 @@ CREATE TABLE UserAction (
     user_action_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     video_id INT,
+    category_id INT,
     action VARCHAR(255)
 ); 
 
-INSERT INTO UserAction (user_id, video_id, action)
-VALUES (10, 1, 'watch-event');
+INSERT INTO UserAction (user_id, video_id, category_id, action)
+VALUES (10, 1, 5, 'watch-event');
 
-INSERT INTO UserAction (user_id, video_id, action)
-VALUES (10, 1, 'watch-event');
+INSERT INTO UserAction (user_id, video_id, category_id, action)
+VALUES (10, 1, 5, 'rate-event');
 
-INSERT INTO UserAction (user_id, video_id, action)
-VALUES (10, 2, 'watch-event');
-
-INSERT INTO UserAction (user_id, video_id, action)
-VALUES (10, 3, 'rate-event');
-
-INSERT INTO UserAction (user_id, video_id, action)
-VALUES (10, 1, 'rate-event');
-
-INSERT INTO UserAction (user_id, video_id, action)
-VALUES (10, 1, 'rate-event');
-
-INSERT INTO UserAction (user_id, video_id, action)
-VALUES (10, 1, 'rate-event');
 

@@ -5,3 +5,4 @@ CREATE USER 'user_host'@'%' IDENTIFIED BY 'secret';
 GRANT ALL PRIVILEGES ON * . * TO 'user_host'@'%';
 
 FLUSH PRIVILEGES;
+

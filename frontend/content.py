@@ -162,7 +162,9 @@ def video_watched_event(id):
     try:
 
         user_id = current_user.user_id
+        
         video_id = id
+        category_id = request.args.get('category_id')
         
         producer = KafkaProducer(
         bootstrap_servers='kafka1:9092', 
@@ -174,6 +176,7 @@ def video_watched_event(id):
         value={
             "user_id": user_id,
             "video_id": video_id,
+            "category_id" : category_id,
             "action": "watch-event"
         })
         producer.flush()
@@ -189,6 +192,7 @@ def video_rated_event():
 
         video_id = request.form.get('current_video')
         user_id = current_user.user_id
+        category_id = request.form.get('category_id')
 
         producer = KafkaProducer(
         bootstrap_servers='kafka1:9092', 
@@ -200,6 +204,7 @@ def video_rated_event():
         value={
             "user_id": user_id,
             "video_id": video_id,
+            "category_id" : category_id,
             "action" : 'rate-event'
         })
         producer.flush()
