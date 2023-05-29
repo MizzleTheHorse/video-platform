@@ -6,6 +6,8 @@ from kafka import KafkaConsumer, KafkaProducer
 import json
 from .video_client import VideoClient
 from .video_service_pb2 import Video
+import socket
+
 
 
 content = Blueprint('content', __name__)
@@ -161,7 +163,10 @@ def profile():
 def video_watched_event(id):
     try:
 
-        user_id = current_user.user_id
+        if current_user.is_authenticated:
+                user_id = current_user.user_id
+        else:
+            user_id = 0
         
         video_id = id
         category_id = request.args.get('category_id')
@@ -190,8 +195,12 @@ def video_watched_event(id):
 def video_rated_event():
     try:
 
+        if current_user.is_authenticated:
+                user_id = current_user.user_id
+        else:
+            user_id = 0
+
         video_id = request.form.get('current_video')
-        user_id = current_user.user_id
         category_id = request.form.get('category_id')
 
         producer = KafkaProducer(
@@ -215,3 +224,7 @@ def video_rated_event():
   
 
 
+
+@content.route('/ping', methods=['GET'])
+def ping():
+    return f'PONG - Container ID: {socket.gethostname()}'

@@ -3,6 +3,7 @@ from flask import Flask
 from .models import User
 from .user_client import UserClient
 from flask_login import LoginManager
+import socket
 
 
 def create_app():
