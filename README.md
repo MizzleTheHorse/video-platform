@@ -2,32 +2,11 @@
 
 how to run whole system: 
 
-build all images first: 
+turn off all nginx and mysql services 
 
-> cd frontend
+> sudo service mysql stop
+> sudo service nginx stop 
 
-> docker build . -t frontend 
+Build all docker containers
 
-> cd ..
-
-> cd user 
-
-> docker build . -t user_service 
-
-> cd ..
-
-> cd video 
-
-> docker build . -t video_service 
-
-> cd ..
-
-run docker compose file 
-
-> docker-compose up 
-
-
-
-localhost:5000
-
-local:host:8088
+> docker-compose up --scale frontend=3
