@@ -1,5 +1,15 @@
 # video-platform
 
+
+Flexible Software Architectures via Microservices and Containerization
+
+Bachelor Project SDU 2023
+
+Description: 
+
+Add desc
+
+
 how to run whole system: 
 
 turn off all nginx and mysql services 
