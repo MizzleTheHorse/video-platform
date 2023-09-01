@@ -7,7 +7,7 @@ Bachelor Project SDU 2023
 
 Description: 
 
-Add desc
+TODO: add descr
 
 
 how to run whole system: 
